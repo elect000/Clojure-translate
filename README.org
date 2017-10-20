@@ -1,0 +1,86 @@
+# This is a Bibtex reference
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:t arch:headline ^:nil
+#+OPTIONS: author:t broken-links:nil c:nil creator:nil
+#+OPTIONS: d:(not "LOGBOOK") date:nil e:nil email:nil f:t inline:t num:t
+#+OPTIONS: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+OPTIONS: timestamp:nil title:t toc:nil todo:t |:t
+#+TITLE: Clojure for the Brave and True
+#+DATE: 
+#+AUTHOR: elect
+#+EMAIL: e.tmailbank@gmail.com
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 24.5.1 (Org mode 9.1.1)
+#+LATEX_CLASS: koma-article
+#+LATEX_CLASS_OPTIONS: 
+#+LATEX_HEADER_EXTRA: \bibliography{reference}
+#+LaTeX_CLASS_OPTIONS:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+SUBTITLE: 日本語意訳
+#+STARTUP: indent overview inlineimages
+* はじめに
+  　このページは[[https://www.braveclojure.com/getting-started/][Clojure for the Brave and True]]の日本語意訳です。何か問題がありましたら、Issueに上げて頂けると幸いです。
+* 第一章 Clojure REPLを動かしてみよう
+  この章では、手っ取り早くClojureという言語を触ってみるための章です。何事も百聞は一見に如かず、まずは書いてみましょう。書いてみることで既にClojureを書いている同士達と経験を共有することができます。つまりは皆さんのモチベーションを上げることにつながるのです。
+
+　そして私達は、この言語を学ぶにあたりREPL(Read Eval Print Loop)を用いることで書いたコードを即座に実行することができます。REPLとはPythonのインタプリタのようなものです。これにより、言語理解を加速させ効率的な学習をすることができます。
+
+　さて、まずはClojureについて簡単に紹介していきます。ここで用いるのは、Clojureのビルドツールである、Leiningenです。C言語で言うgccのようなものだと考えて頂いて構いません。この章では以下のLeiningenの機能を紹介していきます。
+- Leiningenで新しいプロジェクトを作成する
+- プロジェクトをビルドして実行可能なjarファイルを作成する(.exeファイルのようなものです)
+- Clojure REPLでコードを実行する
+** Clojureとは何か
+   　Clojureとは、Rich Hickeyによってかの至高の言語Lispをベースにして作成されました。Lispには他の言語では得がたい表現力の高いコードを描く能力があります。明解な関数プログラミングであるこの言語を学ぶことにより、私達はプログラマーとしてより高度な思考能力を身につけることができます。さらにClojureは、並行プログラミングのような伝統的に複雑とされてきた課題を解決するための優れたツールを用意しています。
+
+   　しかし忘れてはならないことに、Clojureという言語そのものとClojureコンパイラとの区別を知っておくことがあります。Clojureは構文、関数型の表現を重視したLispの方言ではありますが、実装の方は独立しています。このコンパイラはjarファイル、 =つまりclojure.jar= の出力が出来るものであり、これはClojureでかかれたコードを、JVM(Java Virtual Machine)バイトコードでコンパイルします。ClojureのコンパイラはClojureとJava両方の言語と、Javaコンパイラを参照しているものであり、つまりClojureという言語そのものとは別のものなのです。
+
+   　Ruby、Python、C、bazillionなどのプログラミング言語とは異なって、Clojureは =hosted language= です。ClojureプログラムはJVM上で実行されるため、JVMのスレッド処理やガベージコレクションなどの機能の影響を受けます。ClojureはさらにJavaScript(ClojureScriptという名前で人気を得ています)、Microsoft Common Language Runtime(CLR)、といった言語にも注目していますが、ここではそちらの領域まで触れず、JVM上で実装されるClojureについてのみ言及していきます。
+
+   　さらに詳しいClojureとJVMの関係については後述しますが、最低限理解しておくべき概念は以下のものです。
+   - JVMのプロセスはJavaバイトコードを実行します
+   - 通常、JavaコンパイラはJavaのソースコードからJavaバイトコードを生成します。
+   - jarファイルはJavaバイトコードの集合です。
+   - Javaプログラムは通常、jarファイルとして配布されます。
+   - Javaプログラムである =clojure.jar= はClojureソースコードを読んで、Javaバイトコードを生成します。
+   - そのJavaバイトコードは =clojure.jar= を実行したものと同じのJVMプロセスで実行されます。
+
+   　Clojureは日々進化しています。今あなたが見ているClojureのバージョンがこの文章で触れているものよりも新しいかもしれませんが、これについて心配する必要がありません。この文章では基本的な(Clojureのバージョンに関係がない)内容についての説明を行うので、この文章が古いものなのではないかと心配する必要はありません。
+
+   　さて、Clojureが何であるのかを理解できたと思いますので、次は実際にClojureプログラミングに触れていきましょう。
+
+** Leiningen
+　今日の多くのClojureユーザはプロジェクトのビルドと設定にLeiningenを使っています。後述する付録AではLeiningenの詳細な使い方を学ぶことができますが、ここでは4つのタスクについてのみに焦点を当てていきます。
+1. 新しいClojureプロジェクトの作成
+2. Clojureプロジェクトの実行
+3. Clojureプロジェクトの構築
+4. REPLの使用
+
+　続行する前に、Javaバージョン1.6以降がインストールされていることを確認してください。端末で ~java -version~ してバージョンを確認し、最新の[[http://www.oracle.com/technetwork/java/javase/downloads/index.html][Java Runtime Environment(JRE)]]をダウンロードしてください。次に、[[http://leiningen.org/][Leiningenのホームページ]](WindowsユーザはWindowsインストーラがあることに注意してください)の手順に従ってLeiningenをインストールしてください。Leiningenをインストールすると、自動的にClojure compiler、clojure.jarがダウンロードされます。
+
+
+** 新しいClojureプロジェクトの作成
+　新しいClojureプロジェクトの作成は非常に簡単です。まず1つのLeiningenコマンドがプロジェクトスケルトンを作成してみましょう。後で、Clojureライブラリを組み込むなどの応用を実行する方法を学習しますが、これから行うプロジェクトではそのような拡張せずとも作成したコードを実行することができます。
+
+　それでは早速端末で以下のコマンドをタイプしてClojureのプロジェクトを作成してみましょう。
+
+#+BEGIN_SRC shell
+lein new app clojure-noob
+#+END_SRC
+
+　このコマンドはclojure-noobというプロジェクトを作成して、以下のような階層のファイル群を作成します。(多少の変更があるかもしれませんが、全く気にすることではありません)
+
+#+BEGIN_SRC text
+| .gitignore
+| doc
+| | intro.md
+| project.clj  1
+| resources    2
+| src
+| | clojure-noob
+| | | core.clj 3
+| test         4
+| | clojure-noob
+| | | core_text.clj
+#+END_SRC
