@@ -43,7 +43,7 @@
 ** Clojureとは何か
    　Clojureとは、Rich Hickeyによってかの至高の言語Lispをベースにして作成されました。Lispには他の言語では得がたい表現力の高いコードを描く能力があります。明解な関数プログラミングであるこの言語を学ぶことにより、私達はプログラマーとしてより高度な思考能力を身につけることができます。さらにClojureは、並行プログラミングのような伝統的に複雑とされてきた課題を解決するための優れたツールを用意しています。
 
-   　しかし忘れてはならないことに、Clojureという言語そのものとClojureコンパイラとの区別を知っておくことがあります。Clojureは構文、関数型の表現を重視したLispの方言ではありますが、実装の方は独立しています。このコンパイラはjarファイル、 =つまりclojure.jar= の出力が出来るものであり、これはClojureでかかれたコードを、JVM(Java Virtual Machine)バイトコードでコンパイルします。ClojureのコンパイラはClojureとJava両方の言語と、Javaコンパイラを参照しているものであり、つまりClojureという言語そのものとは別のものなのです。
+   　しかし忘れてはならないことに、Clojureという言語そのものとClojureコンパイラとの区別を知っておくことがあります。Clojureは構文、関数型の表現を重視したLispの方言ではありますが、実装の方は独立しています。このコンパイラはjarファイル、 つまり =clojure.jar= の出力が出来るものであり、これはClojureでかかれたコードを、JVM(Java Virtual Machine)バイトコードでコンパイルします。ClojureのコンパイラはClojureとJava両方の言語と、Javaコンパイラを参照しているものであり、つまりClojureという言語そのものとは別のものなのです。
 
    　Ruby、Python、C、bazillionなどのプログラミング言語とは異なって、Clojureは =hosted language= です。ClojureプログラムはJVM上で実行されるため、JVMのスレッド処理やガベージコレクションなどの機能の影響を受けます。ClojureはさらにJavaScript(ClojureScriptという名前で人気を得ています)、Microsoft Common Language Runtime(CLR)、といった言語にも注目していますが、ここではそちらの領域まで触れず、JVM上で実装されるClojureについてのみ言及していきます。
 
@@ -142,7 +142,6 @@ java -jar target/uberjar/clojure-noob-0.1.0-SNAPSHOT-standalone.jar
 　ここまでであなたはClojureの基本的なビルド、実行、そして極めて基本的なClojureプログラミングについて知ることができました。この後の章では、今実行したコマンドのより詳細なLeiningenの内部動作について学び、ClojureとJVMとの関係と作成したコードの実行方法を完璧に理解することができます。
 
 　第二章では、Emacsの不思議と栄光について話し合いますが、その前に別の重要なツールであるREPLを紹介します。
-<<<<<<< HEAD
 
 ** REPLを使ってみよう
 　REPLはコードを試験するためのツールであり、実行中のプログラムと対話することができ、思いついたアイデアを即座に試すことができます。REPLはコードを入力し逐次実行するためのプロンプトを提供します。そして私達の入力を =読み取り= 、 =評価= し 、結果を =出力= し、 =ループ= を繰り返しプロンプトを再度表示します。
@@ -745,5 +744,4 @@ To me, boxing is like a ballet, except there's no music, no choreography, and th
 　Emacsの知識を本格的に身につけることのできたということは、Clojureを本格的に学ぶことのできる環境が整ったということです。次の章からはいよいよClojureという言語を詳しく見ていくことになります。
 
 * 第3章
-=======
->>>>>>> 080e388b6cbaa3a79c27eff52d84235f81100cab
+
