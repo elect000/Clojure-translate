@@ -1,0 +1,1854 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clojure for the Brave and True</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="elect" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Clojure for the Brave and True
+<br />
+<span class="subtitle">日本語意訳</span>
+</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgdfe789d">はじめに</a></li>
+<li><a href="#orgcb5ee61">第1章 Clojure REPLを動かしてみよう</a>
+<ul>
+<li><a href="#org6c7be92">Clojureとは何か</a></li>
+<li><a href="#orgd7be069">Leiningen</a></li>
+<li><a href="#org2774538">新しいClojureプロジェクトの作成</a></li>
+<li><a href="#orga7ad4cc">Clojureプロジェクトを実行する</a></li>
+<li><a href="#org77f5e72">Clojureプロジェクトの構築</a></li>
+<li><a href="#org2e72ffe">REPLを使ってみよう</a></li>
+<li><a href="#org11d8ce8">Clojureの編集ツール</a></li>
+<li><a href="#org1b89f63">この章のまとめ</a></li>
+</ul>
+</li>
+<li><a href="#orgabe22fd">第2章 Emacsの使い方</a>
+<ul>
+<li><a href="#org8efe6d6">インストール</a></li>
+<li><a href="#org2bfa24f">構成</a></li>
+<li><a href="#org25174d8">Emacsの緊急停止コマンド</a></li>
+<li><a href="#orged3c604">Emacsバッファ</a></li>
+<li><a href="#orgd9419e3">ファイルの操作</a></li>
+<li><a href="#org2c99b28">キーバインドとモード</a>
+<ul>
+<li><a href="#org86baf40">EmacsはLispのインタプリタです</a></li>
+<li><a href="#org1a118eb">モード</a></li>
+<li><a href="#org0671418">パッケージのインストール</a></li>
+</ul>
+</li>
+<li><a href="#org0f61081">編集におけるコアな用語とキーバインド</a>
+<ul>
+<li><a href="#org4de8eab">ポインタ</a></li>
+<li><a href="#org6ee614b">移動</a></li>
+<li><a href="#orge798e11">範囲選択</a></li>
+<li><a href="#orgd906cc4">削除とキルリング</a></li>
+<li><a href="#orga08fb5d">編集とヘルプ</a></li>
+</ul>
+</li>
+<li><a href="#org85a73a0">EmacsでClojureを扱う</a>
+<ul>
+<li><a href="#org7b4de5a">REPLを起動してみよう</a></li>
+<li><a href="#orgc3ff1e8">Emacsのウィンドウとフレームについて</a></li>
+<li><a href="#orgf9e1a96">豊富で有用なキーバインド</a></li>
+<li><a href="#org72806e4">エラーの処理方法</a></li>
+<li><a href="#orgf52140d">Paredit</a></li>
+<li><a href="#orgc178f50">ラッピングとスラーピング</a></li>
+<li><a href="#org5124c07">バーフィング</a></li>
+<li><a href="#orgdd817c8">その他の移動</a></li>
+</ul>
+</li>
+<li><a href="#org21b234f">さらなる学習をするには</a></li>
+<li><a href="#orgef9ee13">この章のまとめ</a></li>
+</ul>
+</li>
+<li><a href="#org9a85c74">第3章</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgdfe789d" class="outline-2">
+<h2 id="orgdfe789d">はじめに</h2>
+<div class="outline-text-2" id="text-orgdfe789d">
+<p>
+　このページは<a href="https://www.braveclojure.com/getting-started/">Clojure for the Brave and True</a>の日本語意訳です。何か問題がありましたら、Issueに上げて頂けると幸いです。<br />
+</p>
+</div>
+</div>
+<div id="outline-container-orgcb5ee61" class="outline-2">
+<h2 id="orgcb5ee61">第1章 Clojure REPLを動かしてみよう</h2>
+<div class="outline-text-2" id="text-orgcb5ee61">
+<p>
+この章では、手っ取り早くClojureという言語を触ってみるための章です。何事も百聞は一見に如かず、まずは書いてみましょう。書いてみることで既にClojureを書いている同士達と経験を共有することができます。つまりは皆さんのモチベーションを上げることにつながるのです。<br />
+</p>
+
+<p>
+　そして私達は、この言語を学ぶにあたりREPL(Read Eval Print Loop)を用いることで書いたコードを即座に実行することができます。REPLとはPythonのインタプリタのようなものです。これにより、言語理解を加速させ効率的な学習をすることができます。<br />
+</p>
+
+<p>
+　さて、まずはClojureについて簡単に紹介していきます。ここで用いるのは、Clojureのビルドツールである、Leiningenです。C言語で言うgccのようなものだと考えて頂いて構いません。この章では以下のLeiningenの機能を紹介していきます。<br />
+</p>
+<ul class="org-ul">
+<li>Leiningenで新しいプロジェクトを作成する<br /></li>
+<li>プロジェクトをビルドして実行可能なjarファイルを作成する(.exeファイルのようなものです)<br /></li>
+<li>Clojure REPLでコードを実行する<br /></li>
+</ul>
+</div>
+<div id="outline-container-org6c7be92" class="outline-3">
+<h3 id="org6c7be92">Clojureとは何か</h3>
+<div class="outline-text-3" id="text-org6c7be92">
+<p>
+　Clojureとは、Rich Hickeyによってかの至高の言語Lispをベースにして作成されました。Lispには他の言語では得がたい表現力の高いコードを描く能力があります。明解な関数プログラミングであるこの言語を学ぶことにより、私達はプログラマーとしてより高度な思考能力を身につけることができます。さらにClojureは、並行プログラミングのような伝統的に複雑とされてきた課題を解決するための優れたツールを用意しています。<br />
+</p>
+
+<p>
+　しかし忘れてはならないことに、Clojureという言語そのものとClojureコンパイラとの区別を知っておくことがあります。Clojureは構文、関数型の表現を重視したLispの方言ではありますが、実装の方は独立しています。このコンパイラはjarファイル、 <code>つまりclojure.jar</code> の出力が出来るものであり、これはClojureでかかれたコードを、JVM(Java Virtual Machine)バイトコードでコンパイルします。ClojureのコンパイラはClojureとJava両方の言語と、Javaコンパイラを参照しているものであり、つまりClojureという言語そのものとは別のものなのです。<br />
+</p>
+
+<p>
+　Ruby、Python、C、bazillionなどのプログラミング言語とは異なって、Clojureは <code>hosted language</code> です。ClojureプログラムはJVM上で実行されるため、JVMのスレッド処理やガベージコレクションなどの機能の影響を受けます。ClojureはさらにJavaScript(ClojureScriptという名前で人気を得ています)、Microsoft Common Language Runtime(CLR)、といった言語にも注目していますが、ここではそちらの領域まで触れず、JVM上で実装されるClojureについてのみ言及していきます。<br />
+</p>
+
+<p>
+　さらに詳しいClojureとJVMの関係については後述しますが、最低限理解しておくべき概念は以下のものです。<br />
+</p>
+<ul class="org-ul">
+<li>JVMのプロセスはJavaバイトコードを実行します<br /></li>
+<li>通常、JavaコンパイラはJavaのソースコードからJavaバイトコードを生成します。<br /></li>
+<li>jarファイルはJavaバイトコードの集合です。<br /></li>
+<li>Javaプログラムは通常、jarファイルとして配布されます。<br /></li>
+<li>Javaプログラムである <code>clojure.jar</code> はClojureソースコードを読んで、Javaバイトコードを生成します。<br /></li>
+<li>そのJavaバイトコードは <code>clojure.jar</code> を実行したものと同じのJVMプロセスで実行されます。<br /></li>
+</ul>
+
+<p>
+　Clojureは日々進化しています。今あなたが見ているClojureのバージョンがこの文章で触れているものよりも新しいかもしれませんが、これについて心配する必要がありません。この文章では基本的な(Clojureのバージョンに関係がない)内容についての説明を行うので、この文章が古いものなのではないかと心配する必要はありません。<br />
+</p>
+
+<p>
+　さて、Clojureが何であるのかを理解できたと思いますので、次は実際にClojureプログラミングに触れていきましょう。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd7be069" class="outline-3">
+<h3 id="orgd7be069">Leiningen</h3>
+<div class="outline-text-3" id="text-orgd7be069">
+<p>
+　今日の多くのClojureユーザはプロジェクトのビルドと設定にLeiningenを使っています。後述する付録AではLeiningenの詳細な使い方を学ぶことができますが、ここでは4つのタスクについてのみに焦点を当てていきます。<br />
+</p>
+<ol class="org-ol">
+<li>新しいClojureプロジェクトの作成<br /></li>
+<li>Clojureプロジェクトの実行<br /></li>
+<li>Clojureプロジェクトの構築<br /></li>
+<li>REPLの使用<br /></li>
+</ol>
+
+<p>
+　続行する前に、Javaバージョン1.6以降がインストールされていることを確認してください。端末で <code>java -version</code> してバージョンを確認し、最新の<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Runtime Environment(JRE)</a>をダウンロードしてください。次に、<a href="http://leiningen.org/">Leiningenのホームページ</a>(WindowsユーザはWindowsインストーラがあることに注意してください)の手順に従ってLeiningenをインストールしてください。Leiningenをインストールすると、自動的にClojure compiler、clojure.jarがダウンロードされます。<br />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org2774538" class="outline-3">
+<h3 id="org2774538">新しいClojureプロジェクトの作成</h3>
+<div class="outline-text-3" id="text-org2774538">
+<p>
+　新しいClojureプロジェクトの作成は非常に簡単です。まず1つのLeiningenコマンドがプロジェクトスケルトンを作成してみましょう。後で、Clojureライブラリを組み込むなどの応用を実行する方法を学習しますが、これから行うプロジェクトではそのような拡張せずとも作成したコードを実行することができます。<br />
+</p>
+
+<p>
+　それでは早速端末で以下のコマンドをタイプしてClojureのプロジェクトを作成してみましょう。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">lein new app clojure-noob
+</pre>
+</div>
+
+<p>
+　このコマンドはclojure-noobというプロジェクトを作成して、以下のような階層のファイル群を作成します。(多少の変更があるかもしれませんが、全く気にすることではありません)<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">| .gitignore
+| doc
+| | intro.md
+| project.clj  1
+| resources    2
+| src
+| | clojure-noob
+| | | core.clj 3
+| test         4
+| | clojure-noob
+| | | core_text.clj
+</pre>
+</div>
+
+<p>
+　このプロジェクトスケルトンは、本質的には特別なものではありません。Leiningenが使用している骨組みです。アプリケーションをビルドする際には、このような階層構造が出来ていることをLeiningenは要求します。番号を振っている最初のファイル <code>project.clj</code> は、Leiningenの設定ファイルです。このファイルは「このプロジェクトにはどのような依存関係がありますか？」「このClojureプログラムが実行されているとき、最初にどの機能を実行するのですか？」などの問題を解決するのに役立ちます。<br />
+</p>
+
+<p>
+　一般に、 <code>src/&lt;project_name&gt;</code> にソースコードを保存します。この場合、3の <code>src/clojure-noob/core.clj</code> ファイルは中心となるClojureコードを書く場所です。4にテストが格納されているのは明らかでしょう。2は画像のようなアセットなどを保存する場所です。<br />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orga7ad4cc" class="outline-3">
+<h3 id="orga7ad4cc">Clojureプロジェクトを実行する</h3>
+<div class="outline-text-3" id="text-orga7ad4cc">
+<p>
+　実際にプロジェクトを実行してみましょう。 <code>src/clojure-noob/core.clj</code> を好きなエディタで開いてみてください。おそらく以下のようなソースコードが読めるはずです。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">ns</span> <span style="color: #ce537a; font-weight: bold;">clojure-noob.core</span> <span style="color: #2d9574;">\\</span> <span style="color: #a45bad;">1</span>
+<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">:gen-class</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defn</span> <span style="color: #bc6ec5; font-weight: bold;">-main</span> <span style="color: #2d9574;">\\</span> <span style="color: #a45bad;">2</span>
+<span style="color: #2d9574;">"I don't do a whole lot...yet"</span>
+<span style="color: #bc6ec5;">[</span>&amp; args<span style="color: #bc6ec5;">]</span>
+ <span style="color: #bc6ec5;">(</span>println <span style="color: #2d9574;">"Hello, World!"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2d9574;">\\</span> <span style="color: #a45bad;">3</span>
+</pre>
+</div>
+
+<p>
+　一行目では名前空間を宣言していますが、今のところ深く考察する必要はありません。2のメイン関数である <code>-main</code> はプログラムの開始地点であり、付録Aに書かれている話題の一つです。そして、最後の3は以下のように置き換えてください。 <code>"Hello, World!" "I'm a little teapot!" (println "I'm a little teapot"))</code><br />
+</p>
+
+<p>
+次に端末の <code>clojure-noob</code> ディレクトリに移動し、次のように入力してください。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">lein run
+</pre>
+</div>
+
+<p>
+おそらくティーポットがあなたに小さな挨拶をしていることでしょう。<br />
+この本を読み進めていけば、このプログラムがどのようなことを行っているのかを字流ことが出来ますが、今のところ知っておくべきことは、私達が関数を作成しそのメイン関数がコマンドライン上のlein runで実行されたことです。<br />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org77f5e72" class="outline-3">
+<h3 id="org77f5e72">Clojureプロジェクトの構築</h3>
+<div class="outline-text-3" id="text-org77f5e72">
+<p>
+　 <code>lein run</code> はあなたの書いたコードを実行する素晴らしい手段の一つですが、leiningenをインストールしていない他の人々と成果を共有するにはどのようにすれば良いでしょうか？そのためには、私達はプロジェクトを、Javaのインストールされた環境(つまりほとんど一般的な環境)でスタンドアロンで動く実行形態のファイルに出力しなければなりません。このファイルを出力するためには、以下のコマンドを実行してください。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">lein uberjar
+</pre>
+</div>
+
+<p>
+　このコマンドは <code>target/uberjar/cojure-noob-0.1.0-SNAPSHOT-standalone.jar</code> を作成します。このファイルを実行するには、続けて以下のコマンドを実行してください。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">java -jar target/uberjar/clojure-noob-0.1.0-SNAPSHOT-standalone.jar
+</pre>
+</div>
+
+<p>
+　このコマンドによってあなたは、実績のあるファイル形式(jarファイル)としてあなたのプロジェクトを出力できました。つまりこれであなたはほとんどすべての環境でこのプロジェクトを実行することができるようになったのです。<br />
+</p>
+
+<p>
+　ここまでであなたはClojureの基本的なビルド、実行、そして極めて基本的なClojureプログラミングについて知ることができました。この後の章では、今実行したコマンドのより詳細なLeiningenの内部動作について学び、ClojureとJVMとの関係と作成したコードの実行方法を完璧に理解することができます。<br />
+</p>
+
+<p>
+　第二章では、Emacsの不思議と栄光について話し合いますが、その前に別の重要なツールであるREPLを紹介します。<br />
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2e72ffe" class="outline-3">
+<h3 id="org2e72ffe">REPLを使ってみよう</h3>
+<div class="outline-text-3" id="text-org2e72ffe">
+<p>
+　REPLはコードを試験するためのツールであり、実行中のプログラムと対話することができ、思いついたアイデアを即座に試すことができます。REPLはコードを入力し逐次実行するためのプロンプトを提供します。そして私達の入力を <code>読み取り</code> 、 <code>評価</code> し 、結果を <code>出力</code> し、 <code>ループ</code> を繰り返しプロンプトを再度表示します。<br />
+</p>
+
+<p>
+　このプロセスによってClojureは、ほとんどの他言語では不可能な迅速なフィードバックサイクルが可能です。Clojureの理解度を素早く確認できるので、適宜使用することを強くおすすめします。また、Lispの経験をするためにもREPLを用いた開発は非常に意義あるものです。この素晴らしい機会を逃さないためにもぜひともREPLを使っていきましょう。<br />
+</p>
+
+<p>
+　REPLを起動するためには、次のコマンドを実行してください。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">lein repl
+</pre>
+</div>
+
+<p>
+出力はおそらく以下のようになるでしょう。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">nREPL server started on port <span style="color: #a45bad;">28925</span>
+REPL-y <span style="color: #a45bad;">0.1.10</span>
+Clojure <span style="color: #a45bad;">1.7.0</span>
+    Exit: Control+D or <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">exit</span><span style="color: #4f97d7;">)</span> or <span style="color: #4f97d7;">(</span>quit<span style="color: #4f97d7;">)</span>
+Commands: <span style="color: #4f97d7;">(</span>user/help<span style="color: #4f97d7;">)</span>
+    Docs: <span style="color: #4f97d7;">(</span>doc function-name-here<span style="color: #4f97d7;">)</span>
+          <span style="color: #4f97d7;">(</span>find-doc <span style="color: #2d9574;">"part-of-name-here"</span><span style="color: #4f97d7;">)</span>
+  Source: <span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">source</span> function-name-here<span style="color: #4f97d7;">)</span>
+          <span style="color: #4f97d7;">(</span>user/sourcery function-name-here<span style="color: #4f97d7;">)</span>
+ Javadoc: <span style="color: #4f97d7;">(</span>javadoc java-object-or-class-here<span style="color: #4f97d7;">)</span>
+Examples from clojuredocs.org: <span style="color: #4f97d7;">[</span>clojuredocs or cdoc<span style="color: #4f97d7;">]</span>
+          <span style="color: #4f97d7;">(</span>user/clojuredocs name-here<span style="color: #4f97d7;">)</span>
+          <span style="color: #4f97d7;">(</span>user/clojuredocs <span style="color: #2d9574;">"ns-here"</span> <span style="color: #2d9574;">"name-here"</span><span style="color: #4f97d7;">)</span>
+clojure-noob.core=&gt;
+</pre>
+</div>
+
+<p>
+　最後の行である <code>clojure-noob.core=&gt;</code> はあなたが <code>clojure-noob.core</code> という名前空間にあることを示しています。こ名前空間ではでは現在 <code>-main</code> 関数だけが定義されています。早速実行してみましょう。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #ce537a; font-weight: bold;">clojure-noob.core</span>=&gt; <span style="color: #4f97d7;">(</span>-main<span style="color: #4f97d7;">)</span>
+<span style="color: #a45bad;">I</span>'m a little teapot!
+<span style="color: #a45bad;">nil</span>
+</pre>
+</div>
+
+<p>
+　素晴らしい！これで私達は関数を呼び出して評価することができました。いくつかの基本的なClojureの関数を試してみましょう。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #ce537a; font-weight: bold;">clojure-noob.core</span>=&gt; <span style="color: #4f97d7;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">4</span><span style="color: #4f97d7;">)</span>
+<span style="color: #a45bad;">10</span>
+<span style="color: #ce537a; font-weight: bold;">clojure-noob.core</span>=&gt; <span style="color: #4f97d7;">(</span>* <span style="color: #a45bad;">1</span> <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">4</span><span style="color: #4f97d7;">)</span>
+<span style="color: #a45bad;">24</span>
+<span style="color: #ce537a; font-weight: bold;">clojure-noob.core</span>=&gt; <span style="color: #4f97d7;">(</span>first <span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span> <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">4</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #a45bad;">1</span>
+</pre>
+</div>
+
+<p>
+　これも面白い結果を得ることができました。ここではいくつかの数字を足し、掛け、そしてベクトルの最初の要素を取り出したのです。それと同時に私達は特徴的なLispの構文を目にしたことになります。それはすべてのLisp、もちろんClojureにも採用されているポーランド記法の表記です。この構文はまずオペレータ（関数）が式の最初に出てくることを意味しています。今の文を難しく感じたとしても、心配することはありません。Clojureの構文については今後わかりやすく解説が行われます。<br />
+</p>
+
+<p>
+　概念的には、REPLはSSH(Secure Shell)に似ています。SSHを使用してリモートサーバとやり取りをするのと同じ方法で、Clojure REPLは実行中のClojureプロセスと対話することができます。この機能は非常に強力であり、例えばREPLを埋め込んだライブプロダクションアプリでは実行中にコードを変更しそれを反映させることができます。ただしREPLを使用したClojureの構文とその意味について詳しく知っている必要があることには注意しなければなりません。<br />
+</p>
+
+<p>
+　もう一つ注意しなければならないことは、この文章ではREPLのプロンプト無しでコードのみを掲載していますが、以下のようにコードを試してみてください。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">do</span> <span style="color: #bc6ec5;">(</span>println <span style="color: #2d9574;">"no prompt here!"</span><span style="color: #bc6ec5;">)</span>
+   <span style="color: #bc6ec5;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #a45bad;">3</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;">; </span><span style="color: #2aa1ae; background-color: #292e34;">=&gt; no prompt here!</span>
+<span style="color: #2aa1ae; background-color: #292e34;">; </span><span style="color: #2aa1ae; background-color: #292e34;">=&gt; 4</span>
+</pre>
+</div>
+
+<p>
+　 <code>;=&gt;</code> はREPLで実行した際の出力と返り値を示します。この場合は上の関数を実行した結果が表示されており、 <code>; =&gt; no prompt here</code> が出力で、 <code>; =&gt; 4</code> が返り値になります。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org11d8ce8" class="outline-3">
+<h3 id="org11d8ce8">Clojureの編集ツール</h3>
+<div class="outline-text-3" id="text-org11d8ce8">
+<p>
+　この時点でClojure言語を学ぶために必要な、エディタや統合開発環境（IDE）の基礎知識が必要です。もしあなたが、Clojureの強力なエディタについての良いチュートリアルが必要な場合には、Clojureユーザに極めて人気の高いEmacsについての説明を第2章で行います。Clojureの開発にはEmacsを使わなければならない、ということは全くありませんが、EmacsはClojure REPLとの親密な関係を持った機能があり、Lispコードの作成に適しています。しかし何よりも忘れてはならないのは、開発環境はあなたに最も適したものを使用するべきだということです。<br />
+</p>
+
+<p>
+　Emacsがあなたに合わない場合のために、Clojure開発のための他のテキストエディタとIDEを設定するためのいくつかの解説を紹介します。<br />
+</p>
+
+<ul class="org-ul">
+<li>このYoutubeの動画はSublime Text2 でClojureの開発を行う場合の設定について説明しています。<a href="https://www.youtube.com/watch?v=wBl0rYXQdGg">Clojure development with Sublime Text 2</a><br /></li>
+<li>こちらはClojureの開発をVimで行いたい際に見るべき素晴らしい入門サイトです。<a href="https://mybuddymichael.com/writings/writing-clojure-with-vim-in-2013.html">Writing Clojure With Vim In 2013</a><br /></li>
+<li>ClojureのEclipseのプラグインはこちらです。<a href="https://github.com/laurentpetit/ccw/wiki/GoogleCodeHome">GoogleCodeHome</a><br /></li>
+<li>IntellijユーザのためのClojure開発環境であるCursive Clojureです。<a href="https://cursiveclojure.com/">Cursive Clojure</a><br /></li>
+<li>Nightcodeは無料で簡潔なClojure開発環境です。<a href="https://github.com/oakes/Nightcode/">Nightcode</a><br /></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1b89f63" class="outline-3">
+<h3 id="org1b89f63">この章のまとめ</h3>
+<div class="outline-text-3" id="text-org1b89f63">
+<p>
+　素晴らしいことにあなたは今回小さなティーポットについてのClojureプログラムを作成することができました。そしてClojureソフトウェアを作成する際に最も重要なツールの一つであるREPLについて触れることもできました。原作者にとってのヒーローの一人である"Long Live"の登場人物から引用するならば以下のような言葉がふさわしいでしょう。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">You held your head like a hero
+On a history book page
+It was the end of a decade
+But the start of an age
+&#8212;Taylor Swift
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgabe22fd" class="outline-2">
+<h2 id="orgabe22fd">第2章 Emacsの使い方</h2>
+<div class="outline-text-2" id="text-orgabe22fd">
+<p>
+　Clojureを身につけるにあたって、あなたのエディタはあなたに最も真摯な味方です。Emacsを使って作業することを強くおすすめしますが、もちろんあなたの使いたいエディタを使用することができます。この章のEmacsの設定に従わない場合や、別のエディタを使いたいと考えた場合には、REPLの設定をするために少しばかりの時間が必要となる可能性があります。<br />
+</p>
+
+<p>
+　私がEmacsをおすすめする理由は、Clojure REPLとの親密な統合が提供されることです。これによって書いているときにすぐにコードを試してみることができます。このようなタイトなフィードバックループは、Clojureを学ぶ際に非常に役立ちます。EmacsはLispの方言で書かれており、他の作業を行う際にも強力なツールとなります。<br />
+</p>
+
+<p>
+　この章の最後で、Emacsの設定は図2-1のようになります。<br />
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/emacs-final.png">図2-1:典型的なEmacsの設定</a><br />
+</p>
+
+<p>
+　ここに到達するためには、まずEmacsをインストールし、新しい人に優しいEmacs設定をセットアップします。次に、ファイルの開き方、編集方法、保存方法、重要なキーバインディングを使ってEmacsとやりとりする方法の基本を学びます。最後に、Clojureコードを実際に編集してREPLとやりとりをする方法を学びます。<br />
+</p>
+</div>
+
+<div id="outline-container-org8efe6d6" class="outline-3">
+<h3 id="org8efe6d6">インストール</h3>
+<div class="outline-text-3" id="text-org8efe6d6">
+<p>
+　あなたが作業しているプラットフォームには、Emacsの最新のメジャーバージョン(Emacs 25やEmacs 24)を用いるべきです。<br />
+</p>
+<ul class="org-ul">
+<li>OS X Mac appとして<a href="http://emacsformacosx.com/">vanilla Emacs</a> をインストールします。Aquamacsのような他のオプションはEmacsをもっと「Macのような」ものにするはずですが、標準的なEmacsとはまったく異なって設定されているため、長期的な使用には問題があるかもしれません。<br /></li>
+<li>Ubuntu <a href="https://launchpad.net/~cassou/+archive/emacs">emacs</a>の支持に従ってください。<br /></li>
+<li>Windows <a href="https://github.com/chuntaro/NTEmacs64">NTEmacs</a>を使うことをおすすめします。<br /></li>
+<li>その他のおすすめ <a href="https://qiita.com/ayato_p/items/10f61995cdc21c2d1927">Spacemacs</a> などの利用はVimユーザにもフレンドリーなEmacsの派生です。こちらを用いた場合は以下に説明している設定ではなくリンク先の設定を参照してください。<br /></li>
+</ul>
+
+<p>
+　Emacsをインストールしたら、それを開いてください。図2-2のようなものが表示されます。<br />
+</p>
+
+<p>
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/emacs-fresh.png">図2-2:最初にEmacsを開いたときに表示される画面</a><br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2bfa24f" class="outline-3">
+<h3 id="org2bfa24f">構成</h3>
+<div class="outline-text-3" id="text-org2bfa24f">
+<p>
+　Clojure用にEmacsを設定するために必要なすべてのファイルのリポジトリが作成されています。これは<a href="https://github.com/flyingmachine/emacs-for-clojure/archive/book1.zip">https://github.com/flyingmachine/emacs-for-clojure/archive/book1.zip</a> にあります。これをEmacsに取り込むためには以下の手順を踏む必要があります。<br />
+</p>
+
+<ol class="org-ol">
+<li>Emacsを閉じます<br /></li>
+<li>~/.emacs.d フォルダを削除してください。(WindowsユーザはC:\Users\your_user_name\AppData\Roaming\にあるはずです)Emacsが設定ファイルを探す場所で、これらを削除し入れ替えることでEmacsの設定を変更しようとしているのです。<br /></li>
+<li>上記のzipファイルをダウンロードし、解凍します。そして出てきたemacs-for-clojure-book1というフォルダを.emacs.dのあった場所に移動し、.emacs.dという名前に変更してください。<br /></li>
+<li><p>
+~/.lein/profiles.clj ファイルを作成してください。(Windowsユーザは、おそらくC:\Users\your_user_name\.lein\profiles.clj を作成します)そして以下の行を追加して下さい。<br />
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">{</span><span style="color: #a45bad;">:user</span> <span style="color: #bc6ec5;">{</span><span style="color: #a45bad;">:plugins</span> <span style="color: #2d9574;">[</span><span style="color: #67b11d;">[</span><span style="color: #ce537a; font-weight: bold;">cider</span><span style="color: #b2b2b2; background-color: #292b2e;">/</span>cider-nrepl <span style="color: #2d9574;">"0.8.1"</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">}</span>
+</pre>
+</div></li>
+<li>Emacsを開いてください。<br /></li>
+</ol>
+
+<p>
+　あなたがEmacsを開いたとき、Emacsは自身のいくつかの拡張パッケージをダウンロードします。このアクティビティが終了した後はEmacsを再起動して下さい。すると図2-3のようなウィンドウが表示されます。<br />
+</p>
+
+<p>
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/emacs-configged.png">図2-3:設定をインストールした後のEmacsの初期画面</a><br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org25174d8" class="outline-3">
+<h3 id="org25174d8">Emacsの緊急停止コマンド</h3>
+<div class="outline-text-3" id="text-org25174d8">
+<p>
+　Ctrl-g はEmacsの重要で基本的な緊急停止コマンドです。このコマンドを実行することでうまくいかないEmacsコマンドを停止させることができ、再実行を可能にすることができます。このコマンドによってEmacsが異常終了したり、編集していたファイルが消失することはありません。あなたの行った現在の行動をキャンセルするだけです。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orged3c604" class="outline-3">
+<h3 id="orged3c604">Emacsバッファ</h3>
+<div class="outline-text-3" id="text-orged3c604">
+<p>
+　すべての編集作業はEmacsバッファで行われます。最初にEmacsを起動すると、=*scratch*= バッファが開いています。基本的なEmacsではウィンドウの一番下に現在のバッファ名を表示します。<br />
+</p>
+
+<p>
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/emacs-buffer-name.png">図2-4:Emacsは現在のバッファ名を表示しています</a><br />
+</p>
+
+<p>
+　デフォルトでは <code>*scratch*</code> バッファはLispの開発に最適化された括弧とインデントの解釈をおこなますが、プレーンテキストを編集する際には不便です。そのため新しいバッファを作成し、そこでプレーンテキストを快適に編集しましょう。以下のシーケンスを実行しましょう。<br />
+</p>
+
+<ol class="org-ol">
+<li>Ctrl+xを同時押し<br /></li>
+<li>bキーを押す<br /></li>
+</ol>
+
+<p>
+　これを省略して書く際には <code>C-x b</code> となります。<br />
+</p>
+
+<p>
+　このシーケンスを実行すると、図2-5に示すように、アプリケーションの下部にプロンプ​​トが表示されます。<br />
+</p>
+
+<p>
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/emacs-buffer-prompt.png">図2-5:ミニバッファはEmacsから入力を求めるプロンプトです</a><br />
+</p>
+
+<p>
+　この領域はミニバッファと呼ばれ、Emacsが入力を求めるところです。今すぐバッファ名を入力してみましょう。すでに開いているバッファ名を入力することもできますし、新しいバッファ名を入力することもできます。 <code>emacs-fun-times</code> と入力してみましょう。するとバッファ名が <code>emacs-fun-times</code> になっていると思います。このバッファ内では基本的なテキスト入力はおそらくあなたの期待した通りの機能を示すと思います。一般キーの入力時には文字が表示され、矢印キーに対しては移動ができ、Enterキーでは新しい行を作成することができます。<br />
+</p>
+
+<p>
+　あなたはおそらくEmacsがそこまで難しいことをしているわけではないことに気づくでしょう。これによってあなたがEmacsが気難しいツールなのではないかという不安を払拭することができるでしょう。もしあなたがこのバッファを消したいと考えたならば、C-x k Enterを入力することでこのバッファを削除することができます。(つまり、その場、バッファをkillするということです)<br />
+</p>
+
+<p>
+　先のコマンドによってあなたは <code>emacs-fun-times</code> というバッファを削除したことになり、おそらく <code>*scratch*</code> バッファに遷移したと思います。一般的に、あなたは望む限りの<br />
+バッファを C-x b シーケンスを実行することで作成することができます。また、同じシーケンスでバッファ間のスムーズな移動もできます。しかしながら、あなたが作成したバッファは C-x C-s でセーブされるまではメモリ上に存在するだけです。バッファを作成しても必ずしもそれに対応したファイルがどこかに作成されるわけではないということに注意してください。さて、基本的なバッファについての説明が終わったところで、ファイルの操作について説明しましょう。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd9419e3" class="outline-3">
+<h3 id="orgd9419e3">ファイルの操作</h3>
+<div class="outline-text-3" id="text-orgd9419e3">
+<p>
+　Emacsでファイルを開くためのキーバインディングはC-x C-f です。そうすると入力を受け付けるミニバッファのプロンプトが表示されます。 <code>〜/.emacs.d/customize/ui.el</code> を入力してみましょう。Emacsはこの入力を読んで、このファイル名と同じ名前のバッファを作成しそこにそのファイルを開きます。37行目に進み、(<code>M-x goto-line Enter 37 Enter</code> / Altキー＋xを入力して、goto-lineという文字を入力しEnterキーを押して、37という数字を入力して、再びEnterキーを押してください) 先頭のセミコロンを削除しコメントを外しましょう。つまり37行目は以下のようになります。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> initial-frame-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>top . <span style="color: #a45bad;">0</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>left . <span style="color: #a45bad;">0</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>width . <span style="color: #a45bad;">120</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>height . <span style="color: #a45bad;">80</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　 <code>width</code> や <code>height</code> の横の値(上では120、80となっている部分)を変更することで、次にEmacsを開いたときのウィンドウのサイズを変更することができます。試しに以下のように件の値を小さくしてみましょう。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> initial-frame-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>top . <span style="color: #a45bad;">0</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>left . <span style="color: #a45bad;">0</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>width . <span style="color: #a45bad;">80</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>height . <span style="color: #a45bad;">20</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　 <code>width</code> と <code>height</code> の値を変更したところで、C-x C-s でファイルを保存することができます。このシーケンスを実行するとEmacsのミニバッファに <code>Wrote /Users/snuffleupagus/.emacs.d/customizations/ui.el</code> といった文が表示されると思います。<br />
+</p>
+
+<p>
+　ファイルを保存したら、Emacsを終了してもう一度起動してください。おそらく起動時の画面はとても小さなサイズになり、図2-6のような形になるはずです。<br />
+</p>
+
+<p>
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/tinemacs.png">図2-6:高さと幅を指定することで、Emacsを開くたびにウィンドウサイズが更新されます</a><br />
+</p>
+
+<p>
+　Emacsが好きなサイズで起動するまで、同じプロセスを2,3回実行してみてください。あるいは37行目をコメントアウトして保存し、Emacsを再起動してください(Emacsをデフォルトの幅と高さで開きます)。ui.elの編集と保存が終わったら <code>C-x k</code> でバッファを閉じることができます。もし何らかの不具合があればこの章の <code>構成</code> の項目から再びファイルを設置し直すことでEmacsを元に戻すことができるでしょう。<br />
+</p>
+
+<p>
+　要約をすると<br />
+</p>
+<ol class="org-ol">
+<li>Emacsではバッファ内で編集作業を行う<br /></li>
+<li>バッファを移動する際には <code>C-x b</code> とバッファ名を入力する<br /></li>
+<li>バッファを新規作成するためには <code>C-x b</code> で新しいバッファ名を入力する<br /></li>
+<li>ファイルを開く際には、 <code>C-x C-f</code> を押し、ファイルのパスを入力する<br /></li>
+<li>ファイルを保存する際には、 <code>C-x C-s</code> を入力する<br /></li>
+<li>ファイルを新しく作る際には、 <code>C-x C-f</code> を入力し、新しく作成したいファイルのパスを入力する。バッファを保存した際に、Emacsは入力した新しいファイルを作成しバッファの内容を保存する。<br /></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org2c99b28" class="outline-3">
+<h3 id="org2c99b28">キーバインドとモード</h3>
+<div class="outline-text-3" id="text-org2c99b28">
+<p>
+　ここまで長い道のりを進んできて、私達は基本的なエディタと同様にEmacsを利用することができるようになりました。これはサーバ上でEmacsを利用する必要がある場合や、Emacsを無理やり使用させられるような場合には役立つことでしょう。<br />
+</p>
+
+<p>
+　しかし、実際にEmacsを用いて生産性を向上させるためには、重要なキーバインディングなどについての情報を知っておく必要があるでしょう。まず私達はEmacsのモードについて学びます。そしてその次にいくつかの重要な用語についての確認を行い、非常に有用なキーバインド達を調べていきます。<br />
+</p>
+</div>
+
+<div id="outline-container-org86baf40" class="outline-4">
+<h4 id="org86baf40">EmacsはLispのインタプリタです</h4>
+<div class="outline-text-4" id="text-org86baf40">
+<p>
+　 <code>キーバインド</code> という言葉の由来は、Emacsが <code>キーストロークをコマンドにバインドする</code> という意味からの派生です。これはelip関数が実行されているという意味です。（その意味ではコマンドと関数は言葉は交換可能であるのかもしれません）例えば <code>C-x b</code> とは関数 <code>switch-to-buffer</code> にバインドされています。同様に <code>C-x C-s</code> は <code>save-file</code> にバインドされています。<br />
+</p>
+
+<p>
+　しかし、Emacsはそれ以上に素晴らしい機能を持っています。単純なキーストロークである、 <code>f</code> や <code>a</code> ですら関数となり得り、私達が <code>self-insert-command</code> として関数を割り当てることが可能です。<br />
+</p>
+
+<p>
+　Emacsからすれば、すべての関数は平等に生成され、すべての関数を定義することも可能です。あまりおすすめできませんが、 <code>save-file</code> のようなコアな関数も再定義することが可能です。<br />
+</p>
+
+<p>
+　関数を再定義できる理由には、Emacsはコード編集機能をロードしているLispインタプリタに過ぎないという事実があります。Emacsはほとんどがelispで書かれているため、Emacsからすれば、 <code>save-file</code> もただの関数であり、 <code>switch-to-buffer</code> もこれと等価に実行可能です。それどころかあなた自身が関数を作成しそれをEmacsに組み込まれている関数と同様に実行することも可能であり、実行中のEmacsの動作をそのEmacs内でelispを書くことで変更できます。<br />
+</p>
+
+<p>
+　このような強力なプログラミング言語を用いてEmacsを変更することで、Emacsは非常に柔軟で自由な形になり、それがEmacsが私達を魅了する理由の一つです。もちろんこのすべての機能を知るためには表面的なものでさえ複雑な部分が見受けられ、学習には時間がかかる可能性があります。しかし、Emacsの根底には、Lispの洗練された単純さと、それに伴う無限の可能性です。この変更可能性には機能の作成と再定義だけにとどまらず、キーバインドの作成、再定義、削除すら可能です。キーバインドとはキーストロークと関数を関連付けるテーブルのエントリに過ぎないため、このテーブルは自由に変更ができるのです。<br />
+</p>
+
+<p>
+　また、 <code>M-x</code> function-name (例えば、 <code>M-x save-buffer</code>)を使用して、特定のキーバインドなしでコマンドを名前から実行することもできます。 <code>M</code> は現代のキーボードで言うならば、WindowsやLinuxではaltキー、MacではOptionキーに割り当てられています。 <code>M-x smex</code> を実行すると、実行する別のコマンドを入力することを求められます。<br />
+</p>
+
+<p>
+　キーバインドと関数を理解したので、どのモードがどのように動作するのかを見ていきましょう。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1a118eb" class="outline-4">
+<h4 id="org1a118eb">モード</h4>
+<div class="outline-text-4" id="text-org1a118eb">
+<p>
+　Emacsのモードは様々な種類のファイルを編集する際に役立つようにパッケージ化されたキーバインドと関数のコレクションです。(モードは、Emacsに構文のハイライト機能などを提供することもありますが、それは二次的な意味を持っているため、ここでは扱いません)<br />
+</p>
+
+<p>
+　例えば、Clojureファイルを編集する際には、EmacsではClojureモードをロードします。この文章を書いている筆者はMarkdownファイルを書いているのでMarkdownモードを利用しています。このモードでは、Markdownの作業に固有の便利なキーバインドがたくさんあります。Cojureを編集するときは、現在のバッファをREPLにロードしてコンパイルするために、 <code>C-c C-k</code> などのような一連のClojureモード固有のキーバインドを知っておくことが最善です。<br />
+</p>
+
+<p>
+　モードには、 <code>メジャーモード</code> と <code>マイナーモード</code> のに種類があります。ClojureモードやMarkdownモードはメジャーモードです。メジャーモードは通常、ファイルを開くときにEmacsによって設定されますが、関連するEmacsコマンド(<code>M-x clojure-mode</code> や <code>M-x markdown-mode</code> など)を実行することで明示的にモードを設定することができます。一つのバッファについてアクティブなメジャーモードは一つだけです。<br />
+</p>
+
+<p>
+　メジャーモードは特定のファイルタイプや言語に特化していますが、対してマイナーモードは通常、ファイルタイプ全体で便利な機能を提供します。例えば、abbrevモードやyasnippetモードは割り当てられた予約語を元に補完処理を行います。マイナーモードは複数のものを同時にアクティブにすることができます。<br />
+</p>
+
+<p>
+　図2-7に示すように、モードライン上でアクティブなモードを確認することができます。<br />
+</p>
+
+<p>
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/emacs-mode-line.png">図2-7：モードラインはどのモードがアクティブであるかを示しています</a><br />
+</p>
+
+<p>
+　ファイルを開いてもEmacsがメジャーモードがロードされないとき、それはEmacsがそのメジャーモードに関するパッケージを入手していないときです。このパッケージのインストールについて次に説明します。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0671418" class="outline-4">
+<h4 id="org0671418">パッケージのインストール</h4>
+<div class="outline-text-4" id="text-org0671418">
+<p>
+　多くのモードはパッケージとして配布されています。これはパッケージリポジトリに格納されたelispファイルの集合体です。この章の冒頭にインストールしたEmacs 24(25)では、パッケージの参照とインストールが非常に簡単です。 <code>M-x packag-list-packages</code> は利用可能なほぼすべてのパッケージを表示します。しかしその前に、 <code>M-x package-refresh-contents</code> によって最新のパッケージリストを得ておくことをおすすめします。また、 <code>M-x package-install</code> から任意のパッケージを指定することでそれをインストールすることもできます。<br />
+</p>
+
+<p>
+　あなた自身のelispファイルやインターネット上のファイルをロードすることで、Emacsをカスタマイズすることもできます。「<a href="http://www.masteringemacs.org/articles/2010/10/04/beginners-guide-to-emacs/">Emacsの初心者向けガイド</a>」を見てみると良いかもしれません。カスタマイズのロード方法には、ガイドの記事の下の方にある「新しいパッケージをロードする」項を参照してください。<br />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0f61081" class="outline-3">
+<h3 id="org0f61081">編集におけるコアな用語とキーバインド</h3>
+<div class="outline-text-3" id="text-org0f61081">
+<p>
+　テキストエディタのようにEmacsを使いたいだけなら、このセクションを飛ばしていただいても構いません。しかし、このセクションを見ることであなたはEmacsの素晴らしい機能のいくつかを知ることができるでしょう。ここでは、重要なEmacsの用語についての説明をします。具体的には、テキストの選択、切り取り、コピー、貼り付けの方法。バッファの効率の良い切り替え方法などです。<br />
+　<br />
+　まず、Emacsで新しいバッファを開き(<code>C-x b</code> でしたね)、それを <code>jack-handy</code> という名前にしましょう。次に、以下のjack Handyの言葉を入力してみましょう。（後述しますが、コピーをした状態でバッファ内で <code>C-y</code> をすると貼り付けられます)<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">If you were a pirate, you know what would be the one thing that would&#12288;really make you mad? Treasure chests with no handles. How the hell are&#12288;you supposed to carry it?!
+
+The face of a child can say it all, especially the mouth part of the face.
+
+To me, boxing is like a ballet, except there's no music, no choreography, and the dancers hit each other.
+</pre>
+</div>
+
+<p>
+　以降はこの文章を弄ることで説明をしていきます。<br />
+</p>
+</div>
+
+<div id="outline-container-org4de8eab" class="outline-4">
+<h4 id="org4de8eab">ポインタ</h4>
+<div class="outline-text-4" id="text-org4de8eab">
+<p>
+　あなたがここまで順番通りにEmacsの設定を行ってきたならば、Emacsのバッファに小さな矩形が表示されていると思います。これが <code>カーソル</code> であり、 <code>ポインタ</code> の図形表示です。ポインタはすべての動作の開始点となります。ここからテキストが挿入され、ほとんどの編集コマンドはポインタに関連して発生します。また、カーソルが文字の上に置かれているように見えますが、実際はその文字と前の文字との間にポインタがあります。<br />
+</p>
+
+<p>
+　例えば、 <code>If you were a pirate</code> の <code>f</code> の上にカーソルが置かれているとき、ポインタは <code>I</code> と <code>f</code> の間にあります。つまり、ここで <code>a</code> を入力すれば <code>Iaf</code> となります。また、 <code>f</code> の上にカーソルを合わせたまま <code>C-k</code> を押すと、それ以降の行の文字が消えてしまいます。つまりこのコマンドは、テキストの <code>kill-line</code> を実行したことになります。(後で詳細については説明します) その変更は <code>C-/</code> でもとに戻すことができます。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6ee614b" class="outline-4">
+<h4 id="org6ee614b">移動</h4>
+<div class="outline-text-4" id="text-org6ee614b">
+<p>
+　矢印キーを使用して他のエディタと同様にポイントを移動できますが、表2-1に示すように、多くのキーバインドによって効率的に移動することもできます。<br />
+</p>
+
+<table id="org42b4b9c" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> テキスト内で移動するためのキーバインド</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">キー</th>
+<th scope="col" class="org-left">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-a</td>
+<td class="org-left">行頭に移動する</td>
+</tr>
+
+<tr>
+<td class="org-left">M-m</td>
+<td class="org-left">その行の空白ではない字の先頭に移動する</td>
+</tr>
+
+<tr>
+<td class="org-left">C-e</td>
+<td class="org-left">その行の末尾に移動する</td>
+</tr>
+
+<tr>
+<td class="org-left">C-f</td>
+<td class="org-left">一文字前に進む</td>
+</tr>
+
+<tr>
+<td class="org-left">C-b</td>
+<td class="org-left">一文字後ろに進む</td>
+</tr>
+
+<tr>
+<td class="org-left">M-f</td>
+<td class="org-left">一単語前に進む</td>
+</tr>
+
+<tr>
+<td class="org-left">M-b</td>
+<td class="org-left">一単語後ろに進む</td>
+</tr>
+
+<tr>
+<td class="org-left">C-s</td>
+<td class="org-left">このコマンドの後に入力された文字列の検索(前向き)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-r</td>
+<td class="org-left">このコマンドの後に入力された文字列の検索(後ろ向き)</td>
+</tr>
+
+<tr>
+<td class="org-left">M-&lt;</td>
+<td class="org-left">バッファの先頭に移動する</td>
+</tr>
+
+<tr>
+<td class="org-left">M-&gt;</td>
+<td class="org-left">バッファの末尾に移動する</td>
+</tr>
+
+<tr>
+<td class="org-left">M-g g</td>
+<td class="org-left">このコマンドの後に入力された行数にジャンプする</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+　さっそくこれらの機能を先ほど作成した <code>jack-handy</code> のバッファに対して行ってみましょう。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge798e11" class="outline-4">
+<h4 id="orge798e11">範囲選択</h4>
+<div class="outline-text-4" id="text-orge798e11">
+<p>
+　Emacsではテキストの選択という考えではなく、領域の選択という考え方を採用しています。領域を作成するには、 <code>C-SPC</code> でマークを設定します。次にポインタを移動すると、マークとポイントの間のすべての部分が領域になります。これは他のテキストエディタの、Shiftキーで領域選択ができる機能に似ています。<br />
+</p>
+
+<p>
+　例えば、 <code>jack-handy</code> バッファで以下のようにしてみましょう。<br />
+</p>
+
+<ol class="org-ol">
+<li>バッファの先頭に行きましょう(<code>M-&lt;</code>)<br /></li>
+<li>C-SPCを押しましょう<br /></li>
+<li><code>M-f</code> を二回押して、二単語分の領域を作ります<br /></li>
+<li>バックスペースキーを押すことでその領域が削除されます(つまり、 <code>If you</code> が削除されます)<br /></li>
+</ol>
+
+<p>
+　Shiftキーではなくマークを使って領域選択を行う利点の一つは、マークを設定した後にEmacsの移動コマンドを自由に使用することができることです。例えばマークを設定して、 <code>C-s</code> を使用し、任意の文字まで飛んで、その範囲までを選択することができます。つまりShiftキーを離さないように注意して文字列を探す必要がなくなるのです。<br />
+</p>
+
+<p>
+　領域選択では、ある操作をバッファの限られた領域内だけに限定することもできます。<br />
+</p>
+
+<ol class="org-ol">
+<li><code>The face of child can say</code> という部分を範囲選択してください。<br /></li>
+<li>その上で <code>M-x replace-string</code> と入力し、その次に <code>face</code> <code>head</code> とEnterで繋げて入力することで領域内の <code>face</code> を <code>head</code> に置換することができます。<br /></li>
+</ol>
+
+<p>
+　なお、 <code>replace-string</code> コマンドそのものは指定された領域に対して効果を発揮する関数であり、上のような動作が通常の利用方法です。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd906cc4" class="outline-4">
+<h4 id="orgd906cc4">削除とキルリング</h4>
+<div class="outline-text-4" id="text-orgd906cc4">
+<p>
+　多くのアプリケーションにおいて私達はテキストを切り取ることができますし、コピーと貼り付けを行うこともできます。切り取りとコピーはクリップボードに選択したものを追加して、貼り付けはクリップボードの内容を現在のアプリケーションにコピーします。Emacsではこのような機能も盛り込んでおり、領域を切り取り、貼り付けることができますし、コピーすることもできます。<br />
+</p>
+
+<p>
+　ところがEmacsにおけるこの3つの動作はやや特殊なものがあります。つまり典型的な切り取り/コピー/貼り付けができるクリップボード機能郡ではできないタスクの実行が可能なのです。<br />
+</p>
+
+<p>
+　Emacsはキルリングという場所に複数のテキストブロックを格納しています。これは昔に切り取られてしまったテキストを検索することができるという素晴らしい機能を持っています。この機能を実際に体験してみましょう。<br />
+</p>
+
+<ol class="org-ol">
+<li>最初の行の、 <code>Treasure</code> という単語の上に領域を作成します<br /></li>
+<li><code>M-w</code> を入力し <code>kill-ring-save</code> します。これはコピーに似た動作をし、該当領域をバッファから削除することなくキルリングに追加します。<br /></li>
+<li>最後の行の、 <code>choreography</code> の先頭にポインタを合わせてください<br /></li>
+<li><code>M-d</code> を入力し、 <code>kill-word</code> を実行します。単語単位での削除が可能で、 <code>choreography</code> の単語が削除されたはずです。<br /></li>
+<li>同じ場所で <code>C-y</code> コマンドを使ってキルリングにあるテキストをバッファに貼り付けましょう。今回は先程削除してキルリングに追加されていた <code>choreography</code> が追加されたはずです。<br /></li>
+<li>同様に <code>M-y</code> コマンドを使うことで今度は <code>choreography</code> という先程貼り付けた単語が消えて、その前にキルリングに保存していた <code>Treasure</code> が追加されました。<br /></li>
+</ol>
+
+<p>
+　ここで非常に有用な切り取りや貼り付けのキーバインドを表2-2に示します。<br />
+</p>
+
+<table id="org3536bf4" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 切り取りや貼り付けに関するキーバインド</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">キー</th>
+<th scope="col" class="org-left">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-w</td>
+<td class="org-left">選択範囲の切り取り</td>
+</tr>
+
+<tr>
+<td class="org-left">M-w</td>
+<td class="org-left">選択範囲のキーリングへの追加（コピー）</td>
+</tr>
+
+<tr>
+<td class="org-left">C-y</td>
+<td class="org-left">貼り付け</td>
+</tr>
+
+<tr>
+<td class="org-left">M-y</td>
+<td class="org-left">貼付けするテキストの選択</td>
+</tr>
+
+<tr>
+<td class="org-left">M-d</td>
+<td class="org-left">単語単位での切り取り</td>
+</tr>
+
+<tr>
+<td class="org-left">C-k</td>
+<td class="org-left">行の削除</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orga08fb5d" class="outline-4">
+<h4 id="orga08fb5d">編集とヘルプ</h4>
+<div class="outline-text-4" id="text-orga08fb5d">
+<p>
+　表2-3は、スペーシングとテキストの補完を扱うために知っておくべき、便利な編集キーバインドを示しています。<br />
+</p>
+
+<table id="orgdd84667" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> その他の便利な編集用キーバインド</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">キー</th>
+<th scope="col" class="org-left">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Tab</td>
+<td class="org-left">行のインデント</td>
+</tr>
+
+<tr>
+<td class="org-left">C-j</td>
+<td class="org-left">新しい行に移動してインデントを行う。EnterとTab</td>
+</tr>
+
+<tr>
+<td class="org-left">M-/</td>
+<td class="org-left">yasnippetなどを使っている際の補完機能を呼ぶキーバインド</td>
+</tr>
+
+<tr>
+<td class="org-left">M-\</td>
+<td class="org-left">ポインタ周辺の無駄なスペースを削除するためのコマンド</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+(日本語ユーザへの注記：M-\はMozcなどの日本語入力切替のためのキーバインドになっていることが多々あるため、意図した動作をしない可能性があります。)<br />
+</p>
+
+<p>
+　Emacsは組み込みで素晴らしいヘルプを持っています。以下の2つのキーがその代表となるヘルプのためのキーバインドです。<br />
+</p>
+
+<table id="orgb8d8296" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> 組み込みのヘルプキーバインド</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">キー</td>
+<td class="org-left">説明</td>
+</tr>
+
+<tr>
+<td class="org-left">C-h k (キーバインド)</td>
+<td class="org-left">キーバインドについての説明をします。</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">コマンド入力後に調べたいキーバインドを入力してください</td>
+</tr>
+
+<tr>
+<td class="org-left">C-h f</td>
+<td class="org-left">関数についての説明をします。</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+　ヘルプテキストは新しいウィンドウに表示されます。このことについては後に説明を行います。今のところは、ヘルプウィンドウは <code>C-x o q</code> (またはヘルプウィンドウ上で <code>q</code>) でこれを閉じることができる、ということを確認してください。<br />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org85a73a0" class="outline-3">
+<h3 id="org85a73a0">EmacsでClojureを扱う</h3>
+<div class="outline-text-3" id="text-org85a73a0">
+<p>
+　次に、Emacsを使ってClojureアプリを効率的に開発する方法を説明します。まずEmacsに接続されたREPLプロセスの開始方法やEmacsウィンドウの操作の両方を学んでいきます。次に式の評価、ファイルのコンパイル、及びその他の便利なタスクの実行に役立つキーバインドの豊富さについても言及します。最後に、Clojure開発時に起こるエラーの処理方法と、オプションのマイナーモードであるPareditのいくつかの機能を紹介します。これは、Lisp系列の言語でコードを記述したり編集したりするのに便利です。<br />
+</p>
+
+<p>
+　Clojureコード自体を学んでいきたい場合は先に進んで大丈夫です。もし何かに躓いた際には何度でも読み返してみてください。<br />
+</p>
+</div>
+
+<div id="outline-container-org7b4de5a" class="outline-4">
+<h4 id="org7b4de5a">REPLを起動してみよう</h4>
+<div class="outline-text-4" id="text-org7b4de5a">
+<p>
+　第1章で学んだように、REPLでは、対話形式でClojureコードを記述し実行することができます。REPLは実行中のClojureプログラムであり、プロンプトを表示して入力を読み取り、評価し、結果を出力し、プロンプトに戻っていきます。第1章ではREPLを <code>lein repl</code> を用いてターミナルから起動しましたが、このセクションではEmacsから直接REPLを起動してみます。<br />
+</p>
+
+<p>
+　EmacsをREPLに接続するには、Emacsの<a href="https://github.com/clojure-emacs/cider/">CIDER</a> を使う必要があります。この章の前半の設定手順に従っている場合にはすでにインストールしてありますが、 <code>M-x package-install Enter CIDER</code> を用いて再インストールすることもできます。<br />
+　<br />
+　CIDERを使うことでEmacs内でREPLを利用することができ、より効率的にREPLと対話できるようになるキーバインドが提供されます。早速REPLセッションを確立してみましょう。Emacsを使用して、第1章で作成した <code>clojure-noob/src/clojure-noob/core.clj</code> ファイルを開きます。(作り忘れた場合などは、 <code>M-x shell</code> でEmacs内からシェルを開くことができるのでそこで作成すると良いでしょう) 次に、 <code>M-x cider-jack-in</code> コマンドでREPLを開始します。ほんの少し待った後にREPLが開始され、新しいバッファが作成されます。そして、図2-8のような表示が出てくるはずです。<br />
+</p>
+
+<p>
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/cider-jack-in.png">図2-8:~M-x cider-jack-in~ を実行した後のEmacsの外観</a><br />
+</p>
+
+<p>
+　今度は2つのウィンドウが見えます。 <code>core.clj</code> ファイルは左側にあり、REPLは右側にあります。Emacsがこのように半分に分割されたことを今まで見たことがなかったとしても心配しないでください。Emacsがウィンドウを如何にして分割しているのかは後で説明を行います。さて、REPLでコードを評価してみましょう。以下の太字の行を入力してみてください。コメントアウトされている部分がEnterキーを押したときにREPLに表示される結果です。コードの内容については次の章で説明を行いますので今は深く考えなくて構いません。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">4</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;">; </span><span style="color: #2aa1ae; background-color: #292e34;">=&gt; 10</span>
+<span style="color: #4f97d7;">(</span>map inc <span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span> <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">4</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;">; </span><span style="color: #2aa1ae; background-color: #292e34;">=&gt; (2 3 4 5)</span>
+<span style="color: #4f97d7;">(</span>reduce + <span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">5</span> <span style="color: #a45bad;">6</span> <span style="color: #a45bad;">100</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;">; </span><span style="color: #2aa1ae; background-color: #292e34;">=&gt; 111</span>
+</pre>
+</div>
+
+<p>
+　このREPLは第一章で使ったものと同じように使用できます。更に詳しい機能について説明をしていきたいところではありますが、ここでEmacsの画面を分割して作業をする方法について説明します。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc3ff1e8" class="outline-4">
+<h4 id="orgc3ff1e8">Emacsのウィンドウとフレームについて</h4>
+<div class="outline-text-4" id="text-orgc3ff1e8">
+<p>
+　Emacsがフレームとウィンドウをどの湯に扱うのかを説明し、ウィンドウ関連の重要なキーバインドをいくつか紹介します。Emacsのウィンドウ操作に慣れている場合は飛ばしても構いません。<br />
+</p>
+
+<p>
+　Emacsは様々な用語を慣れ親しんだ意味とはかなり異なった形で使用しています。通常 <code>ウィンドウ</code> と呼ばれているものはEmacsでは <code>フレーム</code> と呼ばれます。Emacsは <code>フレーム</code> を呼び出しその中で複数の <code>ウィンドウ</code> に分割することができます。複数のウィンドウに分割することで、一度に複数のバッファを表示することができます。これはすでに <code>cider-jack-in</code> コマンドですでに経験していることです。(図2-9を参照)<br />
+</p>
+
+<p>
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/emacs-windows.png">図2-9:Emacsでは、フレームにウィンドウが含まれます</a><br />
+</p>
+
+<p>
+　表2-5は、フレームとウィンドウを操作するためのいくつかのキーバインドを示しています。<br />
+</p>
+
+<table id="orgc4a7953" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 5:</span> Emacsウィンドウのキーバインド</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">キー</th>
+<th scope="col" class="org-left">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x o</td>
+<td class="org-left">カーソルを別のウィンドウに切り替えます。これを使ってClojureファイルとREPLを切り替えてみましょう</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 1</td>
+<td class="org-left">他のウィンドウを削除して現在のウィンドウのみをフレームに残します。これはバッファを消しているわけではいので、作業が消えるわけではありません</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 2</td>
+<td class="org-left">フレームを上下に分割します</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 3</td>
+<td class="org-left">フレームを左右に分割します</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x 0</td>
+<td class="org-left">現在のウィンドウを削除します</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+　以上のEmacsウィンドウについてのキーバインドを試してみることをおすすめします。例えば、Clojureファイルにカーソルを置き、 <code>C-x 1</code> を使用します。もう一方のウィンドウは消え、Clojureコードだけが表示されます。次に以下を実行してみましょう。<br />
+</p>
+
+<ol class="org-ol">
+<li><code>C-x 3</code> を使用してウィンドウを左右に分割しましょう<br /></li>
+<li>右のウィンドウに切り替えるには <code>C-x o</code> を使います<br /></li>
+<li>右のウィンドウでこの内容をCIDERバッファに切り替えるには、 <code>C-x b *cider-repl*</code> を使用します<br /></li>
+</ol>
+
+<p>
+　少し試してから、Emacsに左側はClojureコードを、右側にCIDERバッファが開かれているように設定しましょう。ウィンドウとフレームの詳しい情報について知りたい場合には <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Windows.html">Emacsのマニュアル</a> を参照してください。<br />
+</p>
+
+<p>
+　Emacsのウィンドウを移動できるようになったので、Clojure開発のキーバインドを学びましょう。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf9e1a96" class="outline-4">
+<h4 id="orgf9e1a96">豊富で有用なキーバインド</h4>
+<div class="outline-text-4" id="text-orgf9e1a96">
+<p>
+　ここまでであなたはClojureのプロジェクトをEmacsで使う際の真の力となるキーバインドたちを学ぶための準備を整えました。これから学ぶコマンドは、僅かなキーストロークによってコードを評価、調整、コンパイル、実行することができます。まず式を素早く評価する方法から見ていきましょう。<br />
+</p>
+
+<p>
+　 <code>core.clj</code> の一番下に以下を追加してみてください。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span>println <span style="color: #2d9574;">"Cleanliness is next to godliness"</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　 <code>C-e</code> を用いてこの行末まで移動し、 <code>C-x C-e</code> (または <code>C-c C-e</code>)を実行してみましょう。図2-10に示すように、 <code>Cleanliness is next to godliness</code> はCIDERバッファに表示されます。<br />
+</p>
+
+<p>
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/cider-eval-last-expression.png">図2-10:REPLで別のバッファからのコードを即座に評価します</a><br />
+</p>
+
+<p>
+　キーバインド <code>C-x C-e</code> (<code>C-c C-e</code>)シーケンスは <code>cide-eval-last-expression</code> コマンドを実行します。名前からわかるように、このコマンドは直前の式をREPLに送り、REPLはそれを評価します。なお <code>C-u C-x C-e</code> は、ポインタの後に評価の結果を印刷します。<br />
+</p>
+
+<p>
+　さて、私達が第1章で書いた関数である <code>-main</code> を実行して見ましょう。小さなティーポットからの挨拶が返ってくるはずです。<br />
+</p>
+
+<p>
+　 <code>core.clj</code> バッファ内で <code>C-c M-n</code> シーケンスを実行するとREPLの名前空間をそのファイルの先頭に書かれている名前空間に切り替えることができます。REPLのプロンプトを見ると、 <code>clojure-noob.core&gt;</code> という文字を見ることができます。名前空間について詳しいことを私達はまだ学んでいませんが、名前空間が関数などの名前の競合を避けるためのメカニズムであるということだけを知っていれば十分です。次にREPLのプロンプトに直接 (-main) と入力してみてください。REPLは <code>I'm a little tepot!</code> という返事をしてきます。<br />
+</p>
+
+<p>
+　さて、新しい関数を作成して実行してみましょう。 <code>core.clj</code> の一番下に以下を追加してください。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defn</span> <span style="color: #bc6ec5; font-weight: bold;">train</span>
+  <span style="color: #bc6ec5;">[]</span>
+  <span style="color: #bc6ec5;">(</span>println <span style="color: #2d9574;">"Choo choo!"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　完了したら、ファイルを保存して <code>C-c C-k</code> を使用して、REPLセッション内で現在のファイルをコンパイルします。(REPLが変更を認識するようにコードをコンパイルする必要があるのです) REPLで <code>(train)</code> を実行すると、 <code>Choo choo!</code> と返事をします。<br />
+</p>
+
+<p>
+　REPLの中で <code>C-↑</code> を試して見てください。 <code>C-↑</code> <code>C-↓</code> はREPL履歴を循環します。REPL履歴には、REPLで評価したすべてのClojureの式が含まれています。<br />
+</p>
+
+<p>
+　Macユーザは <code>C-（矢印キー）</code> は別のキーバインドとしてマッピングされています。こちらの設定を変更しないと異なった動作を行う可能性があります。<br />
+</p>
+
+<p>
+　最後にこれを試してみてください。<br />
+</p>
+
+<ol class="org-ol">
+<li>REPL上に  <code>(-main</code> と閉じ括弧を忘れて入力してみてください<br /></li>
+<li><code>C-Enter</code> を押します<br /></li>
+</ol>
+
+<p>
+　CIDERは自動的に括弧を閉じて式を評価する必要があります。これはCIDERが非常に多くの括弧を扱う上で用意されているちょっとした便利な機能です。<br />
+</p>
+
+<p>
+　CIDERには、Clojureを学ぶ際に重要ないくつかのキーバインドがあります。 <code>C-c C-d C-d</code> を押すと、その時点のシンボルのドキュメントが更新され、検索する時間を短縮することができます。ドキュメントを確認し終わったら、 <code>q</code> を押してドキュメントバッファを閉じます。 <code>M-.</code> キーバインドはポインタの下にあるシンボルのソースコードに移動し、 <code>M-,</code> はもとのバッファの位置に戻ることができます。最後に <code>C-c C-d C-a</code> では、任意の関数名とドキュメントのテキストを調べることが可能です。これは名前を正確に覚えていない関数を見つけるために最適な方法です。<br />
+</p>
+
+<p>
+　<a href="https://github.com/clojure-emacs/cider/">CIDER README</a> には、主要なキーバインドの包括的なリストがありますが、今の所重要なものは表2-6と表2-7に示しています。<br />
+</p>
+
+<table id="org7fac948" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 6:</span> Clojureバッファのキーバインド</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">キー</th>
+<th scope="col" class="org-left">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-c M-n</td>
+<td class="org-left">現在のバッファの名前空間に切り替えます</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x C-e</td>
+<td class="org-left">現在のポインタの関数を評価する</td>
+</tr>
+
+<tr>
+<td class="org-left">(C-c C-e)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">C-c C-k</td>
+<td class="org-left">現在のバッファをコンパイルします</td>
+</tr>
+
+<tr>
+<td class="org-left">C-c C-d C-d</td>
+<td class="org-left">選択しているのシンボルのドキュメントを表示します</td>
+</tr>
+
+<tr>
+<td class="org-left">M-. と M-,</td>
+<td class="org-left">選択しているシンボルのソースコードに移動し</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">元のバッファに戻ります</td>
+</tr>
+
+<tr>
+<td class="org-left">C-c C-d C-a</td>
+<td class="org-left">任意のシンボルの検索</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">関数名とドキュメント全体に渡って任意のテキストを見つけます</td>
+</tr>
+</tbody>
+</table>
+
+<table id="orgf198e1d" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 7:</span> CIDERバッファのキーバインド</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">キー</th>
+<th scope="col" class="org-left">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-↓ C-↑</td>
+<td class="org-left">REPL履歴を循環します</td>
+</tr>
+
+<tr>
+<td class="org-left">Enter</td>
+<td class="org-left">括弧を閉じて評価します</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org72806e4" class="outline-4">
+<h4 id="org72806e4">エラーの処理方法</h4>
+<div class="outline-text-4" id="text-org72806e4">
+<p>
+　このセクションではいくつかのバグのあるコードを書いて、Emacsがどのようにそれに応答するのか、そしてエラーからどのように復旧するのかを見ることができます。REPLバッファと <code>core.clj</code> バッファの両方でこれを行います。REPLから始めてみましょう。プロンプトで <code>(map)</code> と入力してEnterキーを押します。図2-11のようなものが表示されます。<br />
+</p>
+
+<p>
+<a href="https://www.braveclojure.com/assets/images/cftbat/basic-emacs/cider-error.png">REPLで不正なコードを実行すると起こる画面</a><br />
+</p>
+
+<p>
+　画面のように、 <code>map</code> に引数を指定しないで呼び出すと、Clojureはエラーコードを返します。REPLバッファに <code>ArityException</code> のエラーメッセージとともに左ウィンドウには怪文書のようなテキストが表示されます。それらは <code>スタックトレース</code> であり、実際に例外を投げた関数とその関数を呼び出した関数を関数呼び出しスタックに表示しています。<br />
+</p>
+
+<p>
+　Clojureのスタックトレースは、初心者では解読が難しいことがあります。しかしこれから有用な情報を取得する方法を学びます。CIDERを使用するとスタックトレースをフィルタすることができ、それによって無駄な情報を削ぎ落とすことができます。 <code>*cider-error*</code> バッファの二行目を見てください。Clojure、Java、REPL、Tooling、Duplicates、Allというフィルタがあります。各オプションをクリックすることでフィルタを有効にすることができます。各スタックトレースの行をクリックして対応するソースコードにジャンプすることもできます。<br />
+</p>
+
+<p>
+　左側のウィンドウのスタックトレースを閉じる方法は次のとおりです。<br />
+</p>
+
+<ol class="org-ol">
+<li><code>C-x o</code> を使用してウィンドウを切り替えます<br /></li>
+<li><code>q</code> を押してスタックトレースを閉じ、自動的にCIDERに戻ることができます<br /></li>
+</ol>
+<p>
+　<br />
+　エラーを再表示するためには、 <code>*cider-error*</code> バッファに切り替えてください。ファイルをコンパイルしようとすると、エラーメッセージが表示されることもあります。コンパイル時のエラーを見るために、次の手順を行ってみましょう。<br />
+</p>
+
+<ol class="org-ol">
+<li><code>(map)</code> を <code>core.clj</code> ファイルの末尾にに追加してください。<br /></li>
+<li><code>C-c C-k</code> を使用してコンパイルします<br /></li>
+</ol>
+
+<p>
+　前に見たものに似た <code>*cider-error*</code> バッファが表示されると思います。ここでも <code>q</code> でスタックトレースを閉じます。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf52140d" class="outline-4">
+<h4 id="orgf52140d">Paredit</h4>
+<div class="outline-text-4" id="text-orgf52140d">
+<p>
+　Clojureコードのバッファにコードを書いている途中に、例えば閉じ括弧が自動的に入力されるなどの不思議な現象に見舞われたかもしれません。<br />
+</p>
+
+<p>
+　これは、 <code>paredit-mode</code> による機能です。 <code>Lisp</code> コードにおける括弧管理をより効率的にするためのマイナーモードです。 <code>Paredit</code> は、すべての括弧、二重引用符、そして大括弧が閉じられていることを必ず保証してくれます。<br />
+</p>
+
+<p>
+　 <code>Paredit</code> はすべての括弧で作成された構造を簡単に移動したり変更したりするためのキーバインドも提供しています。次のセクションでは最低限覚えておくべき有用なキーバインドについて説明しますが、 <a href="https://github.com/georgek/paredit-cheatsheet/blob/master/paredit-cheatsheet.pdf">ドキュメント</a> か包括的なチートシートを参照することができます。（このドキュメントは赤いパイプがポインタを示しています）<br />
+</p>
+
+<p>
+　しかしこのモードに慣れていない場合、 <code>paredit</code> は迷惑な機能であるように感じるでしょう。その場合には、 <code>M-x paredit-mode</code> で機能を無効化することができます。また、再び同じシーケンスを行うことで機能を有効にすることもできます。<br />
+</p>
+
+<p>
+　次のセクションでは有用なキーバインドについて紹介します。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc178f50" class="outline-4">
+<h4 id="orgc178f50">ラッピングとスラーピング</h4>
+<div class="outline-text-4" id="text-orgc178f50">
+<p>
+　 <code>ラッピング</code> はポインタを括弧で囲みます。 <code>スラーピング</code> は閉じ括弧の位置を移動します。例えば以下のような操作が可能になります。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">4</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　から、<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #bc6ec5;">(</span>* <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">3</span><span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">4</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　まず2をラッピングしてみましょう。2の手前にポインタを合わせてください。この位置をここでは <code>|</code> パイプで表しています。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span>+ <span style="color: #a45bad;">1</span> |2 <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">4</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　次に、 <code>M-(</code> <code>paredit-wrap-round</code> コマンドを使うと、以下のような結果になります。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #bc6ec5;">(</span>|2<span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">4</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　アスタリスクとスペースを追加してみましょう。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #bc6ec5;">(</span>* |2<span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">4</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　 <code>C--&gt;</code> で3をスラーピングすることができます。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #bc6ec5;">(</span>* |2 <span style="color: #a45bad;">3</span><span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">4</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　これを行うことで、矢印キーを使って括弧の移動や拡張を自由に行うことができます。<br />
+　<br />
+</p>
+</div>
+</div>
+<div id="outline-container-org5124c07" class="outline-4">
+<h4 id="org5124c07">バーフィング</h4>
+<div class="outline-text-4" id="text-org5124c07">
+<p>
+　もしあなたが間違って4までをスラーピングしてしまった場合は、2や3のある括弧内で <code>C-&lt;-</code> をすることで戻すことができます。そしてこれをバーフィングと呼びます。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #bc6ec5;">(</span>|* <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">4</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　次に <code>C-&lt;-</code> を使います。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #4f97d7;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #bc6ec5;">(</span>* <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">3</span><span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">4</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　ここまでであなたは <code>paredit-mode</code> で括弧を自在に操ることができるようになりました。<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdd817c8" class="outline-4">
+<h4 id="orgdd817c8">その他の移動</h4>
+<div class="outline-text-4" id="text-orgdd817c8">
+<p>
+　多くの場合において、Lisp方言を書くときは、次のような式を書くことになると思います。<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #4f97d7;">(</span>map <span style="color: #bc6ec5;">(</span>comp record first<span style="color: #bc6ec5;">)</span>
+     <span style="color: #bc6ec5;">(</span>d/q '[:find ?post
+            <span style="color: #4f97d7;">:in</span> $ ?search
+            <span style="color: #4f97d7;">:where</span>
+            [<span style="color: #2d9574;">(</span>fulltext $ <span style="color: #4f97d7;">:post/content</span> ?search<span style="color: #2d9574;">)</span>
+             [[?post ?content]]]]
+          <span style="color: #2d9574;">(</span>db/db<span style="color: #2d9574;">)</span>
+          <span style="color: #2d9574;">(</span><span style="color: #4f97d7;">:q</span> params<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+　この種の式では、ある部分式から次の部分式に素早くジャンプできると便利です。括弧の開始地点の直前にポインタを置くと、 <code>C-M-f</code> は閉じ括弧に移動することができます。同様に、ポイントが閉じ括弧にある状態で <code>C-M-b</code> を使うと始めの括弧に移動します。<br />
+</p>
+
+<p>
+　表2-8に今までに学んだ <code>paredit-mode</code> のキーバインドをまとめます。<br />
+</p>
+
+<table id="org2ddb06d" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 8:</span> Pareditのキーバインド</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">キー</th>
+<th scope="col" class="org-left">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">M-x paredit-mode</td>
+<td class="org-left">paredit-modeを切り替えます</td>
+</tr>
+
+<tr>
+<td class="org-left">M-(</td>
+<td class="org-left">paredit-wrap-round 機能を使います</td>
+</tr>
+
+<tr>
+<td class="org-left">C&#x2013;&gt;</td>
+<td class="org-left">閉じ括弧を右にずらします</td>
+</tr>
+
+<tr>
+<td class="org-left">C-&lt;-</td>
+<td class="org-left">閉じ括弧を左にずらします</td>
+</tr>
+
+<tr>
+<td class="org-left">C-M-f C-M-b</td>
+<td class="org-left">開き/閉じ括弧に移動します</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org21b234f" class="outline-3">
+<h3 id="org21b234f">さらなる学習をするには</h3>
+<div class="outline-text-3" id="text-org21b234f">
+<p>
+　Emacsは最古参のエディタの一つであり、その魅力を知った暁には間違いなくあなたの愛用のエディタになります。最初のハードルこそ高く感じるかもしれませんが、そこを超えてしまえば、あなたは一生このエディタを使ったことによる多大な恩恵を受けられるはずです。<br />
+</p>
+
+<p>
+　Emacsを開くたびに私達は何らかのインスピレーションを受けます。仕事場に入った職人のようにこの眼の前に開かれた可能性に感じ入ります。私は、自身のために進化した環境の快適さを感じています。キーバインドやパッケージは日々のアイデアに生き生きとしたものを与えてくれます。<br />
+</p>
+
+<p>
+　これらの資料はEmacsでの旅を続ける際に役立ちます。<br />
+</p>
+
+<ol class="org-ol">
+<li><a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html#Top">Emcasマニュアル</a>は、Emacsについてのほぼ全てに関する丁寧な説明が行われています。時間があるときに目を通してみると良いでしょう。<br /></li>
+<li>Mickey Petersenによる <a href="http://www.masteringemacs.org/reading-guide/">Mastering Emacs</a> はEmacsについての資料の中で最良のものの一つでしょう。<br /></li>
+<li>より視覚的な資料として、 Sacha Chuaが手がけた <a href="http://sachachua.com/blog/wp-content/uploads/2013/05/How-to-Learn-Emacs8.pn%20">Emacsを学ぶ方法</a> をおすすめします。<br /></li>
+<li>組み込みのチュートリアルである <code>C-h t</code> を押すだけです<br /></li>
+</ol>
+
+<p>
+(翻訳者からの注釈：日本でEmacsのチュートリアル本を買う際には発行日に注意してください。Emacsのバージョンは日々更新されているため、古いキーバインドやパッケージの上位互換が一般化している場合が多くあります)<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgef9ee13" class="outline-3">
+<h3 id="orgef9ee13">この章のまとめ</h3>
+<div class="outline-text-3" id="text-orgef9ee13">
+<p>
+　素晴らしいことにあなたはClojure言語を学ぶ環境、Emacsについての理解をほとんど極めることができました。EmacsはLispのインタプリタであり、elisp関数のショートカットとしてシーケンスがあり、モードはキーバインドや関数のコレクションです。Emacs特有のバッファ、ウィンドウ、領域、切り取りやコピー、貼り付けについてをマスターしました。最後に、CIDERとpareditを用いたClojureの便利な作業方法について学びました。<br />
+</p>
+
+<p>
+　Emacsの知識を本格的に身につけることのできたということは、Clojureを本格的に学ぶことのできる環境が整ったということです。次の章からはいよいよClojureという言語を詳しく見ていくことになります。<br />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9a85c74" class="outline-2">
+<h2 id="org9a85c74">第3章</h2>
+<div class="outline-text-2" id="text-org9a85c74">
+<p>
+<code>=====</code><br />
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 080e388b6cbaa3a79c27eff52d84235f81100cab<br />
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: elect</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
